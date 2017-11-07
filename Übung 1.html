@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <title>Schwarzes Brett</title>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  </head>
+  <body>
+    <script>
+		var urls = [];
+		var urlbody = "http://ipc772.inf-bb.uni-jena.de/brett/server";
+		var urlmethod = ".php?method=GET_MESSAGES";
+		var servernum1 = Math.floor(Math.random() * 10) + 1;
+		var servernum2 = Math.floor(Math.random() * 10) + 1;
+		var servernum3 = Math.floor(Math.random() * 10) + 1;
+		//3 read-qorums
+		urls[0] = urlbody+servernum1+urlmethod;
+		urls[1] = urlbody+servernum2+urlmethod;
+		urls[2] = urlbody+servernum3+urlmethod;
+		var finalList = [];
+		var storeList = [];
+		var list = [];
+		var entry = [];
+		var keys = [];
+		
+		for (len = urls.length, l=0; l<len; ++l) {
+			$.getJSON(urls[l], function(data){ 
+				$.each(data,function(idx, obj){ 
+					var items = [];
+					$.each(obj, function(key, value){
+						entry.push(value);
+						keys.push(key);
+						items.push( "<li id='" + key + "'>" + key + " : "+ value + "</li>" );
+					});
+					$( "<ul/> ", {"class": "new-list",html: items.join( "" )}).appendTo( "body" );
+					if(finalList.length > 0){
+						for (len = finalList.length, i=0; i<len; ++i) {
+							if(finalList[i][0] == entry[0] && finalList[i][4] < entry[4] ){
+								finalList[i] = entry;
+							}
+							
+							
+						}
+						/**
+						
+							for (len = finalList.length, m=1; m<len-1; ++m) {
+									items.push( "<li id='" + keys[m] + "'>" + keys[m] + " : "+ entry[m] + "</li> <br>"  );
+							}
+						
+						**/
+						entry = [];
+						keys = [];
+					}
+					else{
+						list.push(entry);
+						entry = [];
+						keys = [];
+					}
+					
+					
+				});
+				
+				
+				if(finalList.length == 0){finalList=list;}
+			});
+		};
+		
+	
+		
+    </script>
+    <h1>Schwarzes Brett</h1>
+    <p>Einträge:</p>
+  </body>
+</html>
+
