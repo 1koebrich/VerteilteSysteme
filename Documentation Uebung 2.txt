@@ -1,9 +1,0 @@
-(I) The client get asked for the file to look for.
-(II) The server checks if the file is there and respondes if true with 'EXISTS' and the size of the file and 'ERR' otherwise.
-(III) The client decides if he wants to download the file. If he wants to, the response is 'OK'
-(IV) The server sends the data and the client saves the file with the prefix 'new_'
-
-Bug: 
-I created a file called 'test.txt' in the same folder where the scripts are, but it was not able to find it, what drived me nearly crazy.
-After i tried it with the name of the script himself (Client.py) it worked. I can't figure out why it doesnt work for txt-files.
-
